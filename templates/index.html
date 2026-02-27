@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-Pesa API Playground | Moses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="badge">⚡ Built by Moses ⚡</div>
+            <h1>🔧 M-Pesa API Playground</h1>
+            <p class="subtitle">
+                Exploring the power of Daraja API — one tab at a time.<br>
+                From the same developer who built 
+                <a href="https://supakeeper.onrender.com" target="_blank" class="superkeeper-link">Superkeeper</a>
+            </p>
+        </div>
+        
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('c2b')">📱 C2B (STK Push)</button>
+            <button class="tab-btn" onclick="switchTab('b2c')">💰 B2C (Payouts)</button>
+            <button class="tab-btn" onclick="switchTab('qr')">📷 QR Code</button>
+            <button class="tab-btn" onclick="switchTab('reversal')">↩️ Reversal</button>
+        </div>
+        
+        <!-- Tab Content Area - Each tab will be populated by its JS file -->
+        <div class="tab-content" id="tabContent">
+            <!-- C2B content will be injected by c2b.js -->
+            <!-- B2C content will be injected by b2c.js -->
+            <!-- QR content will be injected later -->
+            <!-- Reversal content will be injected later -->
+        </div>
+        
+        <!-- Status Section -->
+        <div class="status-section">
+            <div class="status-title">📡 API Status</div>
+            <div id="api-status">
+                <span style="color: #999;">⏳ Ready to connect... Click "Test Connection"</span>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Built with 🟢 for the M-Pesa Daraja API • Learning in public • One feature at a time</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">
+                <a href="#" onclick="switchTab('c2b')">C2B</a> • 
+                <a href="#" onclick="switchTab('b2c')">B2C</a> • 
+                <a href="#" onclick="switchTab('qr')">QR</a> • 
+                <a href="#" onclick="switchTab('reversal')">Reversal</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- SCRIPTS - Order is important! -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/c2b.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/b2c.js') }}"></script>
+</body>
+</html>

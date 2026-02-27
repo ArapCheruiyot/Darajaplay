@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: mpesa-playground
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: CONSUMER_KEY
+        sync: false
+      - key: CONSUMER_SECRET
+        sync: false
+      - key: PASSKEY
+        sync: false
+      - key: SHORTCODE
+        value: "174379"
+      - key: ENVIRONMENT
+        value: "sandbox"
+      - key: B2C_INITIATOR_NAME
+        value: "testapi"
+      - key: B2C_INITIATOR_PASSWORD
+        value: "Safaricom123!"
+      - key: CALLBACK_URL
+        value: "https://your-app.onrender.com/api/callback"
+      - key: B2C_RESULT_URL
+        value: "https://your-app.onrender.com/api/b2c/result"
+      - key: B2C_TIMEOUT_URL
+        value: "https://your-app.onrender.com/api/b2c/timeout"
+      - key: B2C_QUEUE_TIMEOUT_URL
+        value: "https://your-app.onrender.com/api/b2c/timeout"
