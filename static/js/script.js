@@ -52,12 +52,19 @@ function switchTab(tabId) {
         `;
     }
     else if (tabId === 'reversal') {
-        contentDiv.innerHTML = `
-            <div class="feature-placeholder">
-                <h3>↩️ Transaction Reversal</h3>
-                <p>Coming soon! This will demonstrate how to reverse transactions.</p>
-            </div>
-        `;
+        console.log("↩️ Loading Reversal module...");
+        if (window.initReversal) {
+            window.initReversal('tabContent');
+        } else {
+            contentDiv.innerHTML = `
+                <div class="feature-placeholder">
+                    <h3>↩️ Transaction Reversal</h3>
+                    <p>Reversal module not loaded. Check if reversal.js is loaded correctly.</p>
+                    <p style="color: #ff9800; margin-top: 10px;">⏳ Make sure reversal.js is added to your HTML</p>
+                </div>
+            `;
+            console.error("❌ window.initReversal is not defined! Did you add reversal.js to index.html?");
+        }
     }
 }
 
@@ -94,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if all modules are loaded
     console.log("✅ C2B loaded:", !!window.initC2B);
     console.log("✅ B2C loaded:", !!window.initB2C);
+    console.log("✅ Reversal loaded:", !!window.initReversal);  // Added this check
     
     // Load C2B by default
     switchTab('c2b');

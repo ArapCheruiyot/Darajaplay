@@ -19,20 +19,20 @@
             </p>
         </div>
         
-        <!-- Tabs Navigation -->
+        <!-- Tabs Navigation - UPDATED ORDER: Reversal before QR -->
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('c2b')">📱 C2B (STK Push)</button>
             <button class="tab-btn" onclick="switchTab('b2c')">💰 B2C (Payouts)</button>
-            <button class="tab-btn" onclick="switchTab('qr')">📷 QR Code</button>
             <button class="tab-btn" onclick="switchTab('reversal')">↩️ Reversal</button>
+            <button class="tab-btn" onclick="switchTab('qr')">📷 QR Code</button>
         </div>
         
         <!-- Tab Content Area - Each tab will be populated by its JS file -->
         <div class="tab-content" id="tabContent">
             <!-- C2B content will be injected by c2b.js -->
             <!-- B2C content will be injected by b2c.js -->
+            <!-- Reversal content will be injected by reversal.js -->
             <!-- QR content will be injected later -->
-            <!-- Reversal content will be injected later -->
         </div>
         
         <!-- Status Section -->
@@ -43,14 +43,14 @@
             </div>
         </div>
         
-        <!-- Footer -->
+        <!-- Footer - UPDATED ORDER: Reversal before QR -->
         <div class="footer">
             <p>Built with 🟢 for the M-Pesa Daraja API • Learning in public • One feature at a time</p>
             <p style="font-size: 0.9em; margin-top: 10px;">
                 <a href="#" onclick="switchTab('c2b')">C2B</a> • 
                 <a href="#" onclick="switchTab('b2c')">B2C</a> • 
-                <a href="#" onclick="switchTab('qr')">QR</a> • 
-                <a href="#" onclick="switchTab('reversal')">Reversal</a>
+                <a href="#" onclick="switchTab('reversal')">Reversal</a> • 
+                <a href="#" onclick="switchTab('qr')">QR</a>
             </p>
         </div>
     </div>
@@ -59,5 +59,6 @@
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/c2b.js') }}"></script>
     <script src="{{ url_for('static', filename='js/b2c.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/reversal.js') }}"></script> 
 </body>
 </html>
