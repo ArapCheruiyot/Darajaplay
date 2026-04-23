@@ -1,4 +1,4 @@
-# app.py - UPDATED VERSION with working B2C
+# app.py - UPDATED VERSION with Sentry Error Monitoring
 from flask import Flask, render_template, jsonify, request
 import requests
 import base64
@@ -6,8 +6,28 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 
+# =============================================
+# SENTRY ERROR MONITORING (ADDED)
+# =============================================
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+
 # Load environment variables
 load_dotenv()
+
+# Initialize Sentry for error monitoring
+SENTRY_DSN = os.getenv('SENTRY_DSN')
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[FlaskIntegration()],
+        traces_sample_rate=0.1,  # Capture 10% of transactions
+        send_default_pii=False,   # Don't send user personal data
+        environment=os.getenv('ENVIRONMENT', 'development')
+    )
+    print("✅ Sentry error monitoring initialized")
+else:
+    print("⚠️ SENTRY_DSN not found. Error monitoring disabled.")
 
 app = Flask(__name__)
 
@@ -310,6 +330,14 @@ def test():
         }
     })
 
+@app.route('/api/test-error')
+def test_error():
+    """TEST SENTRY: Intentionally trigger an error to verify Sentry monitoring is working"""
+    print("🐛 Test error endpoint called - generating intentional error for Sentry")
+    # This will create a division by zero error and send it to Sentry
+    result = 1 / 0
+    return jsonify({"status": "This won't run because of the error above"})
+
 @app.route('/api/c2b/stkpush', methods=['POST'])
 def stk_push():
     """Handle STK Push from frontend"""
@@ -468,7 +496,7 @@ def debug_b2c_config():
 # =============================================
 if __name__ == '__main__':
     print("\n" + "="*60)
-    print("🚀 STARTING M-PESA PLAYGROUND")
+    print("🚀 STARTING M-PESA PLAYGROUND WITH SENTRY MONITORING")
     print("="*60)
     
     # Check credentials on startup
@@ -479,6 +507,7 @@ if __name__ == '__main__':
     print(f"SHORTCODE: {SHORTCODE}")
     print(f"CALLBACK_URL: {CALLBACK_URL}")
     print(f"ENVIRONMENT: {ENVIRONMENT}")
+    print(f"SENTRY_DSN: {'✅ SET' if SENTRY_DSN else '❌ MISSING'}")
     
     # B2C Configuration Check
     print("\n📋 B2C CONFIGURATION CHECK:")
@@ -496,6 +525,7 @@ if __name__ == '__main__':
         print("❌ Token generation failed - check your credentials")
     
     print("\n📍 Server running at http://127.0.0.1:5000")
+    print("🔍 Test Sentry at http://127.0.0.1:5000/api/test-error")
     print("="*60 + "\n")
     
     app.run(debug=True, port=5000)
